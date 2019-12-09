@@ -13,8 +13,8 @@ jobs:
       run: docker build . --file DockerFile --tag latex-docker:$(date +%s) --tag latex-docker:latest
     - name: Test Image
       run: |
-        exec docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "$PWD":/data latex-docker:latest pdflatex examples/sample1.tex
-        exec docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "$PWD":/data latex-docker:latest pdflatex examples/sample2.tex
+        docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "$PWD":/data latex-docker:latest pdflatex examples/sample1.tex
+        docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "$PWD":/data latex-docker:latest pdflatex examples/sample2.tex
         ls
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@2.9
@@ -24,3 +24,4 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         snapshot: true
         cache: ${{ github.event_name != 'schedule' }}
+        dockerfile: DockerFile
