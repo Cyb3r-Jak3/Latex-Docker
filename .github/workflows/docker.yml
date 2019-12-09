@@ -14,8 +14,8 @@ jobs:
         docker build . --file DockerFile --tag cyb3rjak3/latex-docker:latest
     - name: Test Image
       run: |
-        docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "$PWD":/data latex-docker:latest pdflatex examples/sample1.tex
-        docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "$PWD":/data latex-docker:latest pdflatex examples/sample2.tex
+        docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "$PWD":/data cyb3rjak3/latex-docker:latest pdflatex examples/sample1.tex
+        docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "$PWD":/data cyb3rjak3/latex-docker:latest pdflatex examples/sample2.tex
         ls
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@2.9
