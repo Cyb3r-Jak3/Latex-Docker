@@ -7,11 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    #- name: Pull Image for cache
-    #  run: docker pull cyb3rjak3/latex-docker
+    - name: Pull Image for cache
+      run: docker pull cyb3rjak3/latex-docker
     - name: Build the Docker image
       run: |
-        docker build . --file DockerFile --tag cyb3rjak3/latex-docker:latest
+        docker build . --file Dockerfile --tag cyb3rjak3/latex-docker:latest --cache-from cyb3rjak3/latex-docker
     - name: Test Image
       run: |
         docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "$PWD":/data cyb3rjak3/latex-docker:latest pdflatex examples/sample1.tex
@@ -25,4 +25,4 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         snapshot: true
         cache: ${{ github.event_name != 'schedule' }}
-        dockerfile: DockerFile
+        dockerfile: Dockerfile
