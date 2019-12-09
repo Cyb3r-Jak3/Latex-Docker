@@ -8,4 +8,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build . --file DockerFile --tag cyb3rjak3:$(date +%s)
+      run: docker build . --file DockerFile --tag latex-docker:$(date +%s) --tag latex-docker:latest
+    - name: Test Image
+      run: exec docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "$PWD":/data latex-docker:latest pdflatex examples/sampletex.tex

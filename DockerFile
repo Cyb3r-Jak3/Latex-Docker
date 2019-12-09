@@ -4,7 +4,10 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN ln -snf /usr/share/zoneinfo/Etc/UTC /etc/localtime \
     && echo "Etc/UTC" > /etc/timezone \
-    && apt-get update -q \
-    && apt-get upgrade -qy \
-    && apt-get install texlive-full python-pygments gnuplot -y \
+    && apt-get update -qq \
+    && apt-get upgrade -qq \
+    && apt-get install texlive-full python-pygments gnuplot -qq \
     && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /data
+VOLUME ["/data"]
