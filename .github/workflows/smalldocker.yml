@@ -1,0 +1,28 @@
+name: Docker CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    #- name: Pull Image for cache
+    #  run: docker pull cyb3rjak3/latex-docker:small
+    - name: Build the Docker image
+      run: |
+        docker build . --file Small.Dockerfile --tag cyb3rjak3/latex-docker:small --cache-from cyb3rjak3/latex-docker:small
+    - name: Test Image
+      run: |
+        docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "$PWD":/data cyb3rjak3/latex-docker:small pdflatex examples/sample1.tex
+        docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "$PWD":/data cyb3rjak3/latex-docker:small pdflatex examples/sample2.tex
+        ls
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@2.9
+      with:
+        name: cyb3rjak3/latex-docker
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        snapshot: true
+        cache: ${{ github.event_name != 'schedule' }}
+        dockerfile: Small.Dockerfile
