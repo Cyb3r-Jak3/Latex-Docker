@@ -10,7 +10,8 @@ jobs:
     #- name: Pull Image for cache
     #  run: docker pull cyb3rjak3/latex-docker
     - name: Build the Docker image
-      run: docker build . --file DockerFile --tag latex-docker:$(date +%s) --tag latex-docker:latest
+      run: |
+        docker build . --file DockerFile --tag cyb3rjak3/latex-docker:latest
     - name: Test Image
       run: |
         docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "$PWD":/data latex-docker:latest pdflatex examples/sample1.tex

@@ -6,7 +6,7 @@ RUN ln -snf /usr/share/zoneinfo/Etc/UTC /etc/localtime \
     && echo "Etc/UTC" > /etc/timezone \
     && apt-get update -qq \
     && apt-get upgrade -qq \
-    && apt-get install texlive-full python-pygments gnuplot -qq \
+    && apt-get install texlive-full biber python-pygments gnuplot -qq \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /data
