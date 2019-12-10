@@ -1,5 +1,7 @@
 FROM debian:buster
 
+LABEL AUTHOR Jacob White <jake@jwhite.network>
+
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN ln -snf /usr/share/zoneinfo/Etc/UTC /etc/localtime \

@@ -1,14 +1,18 @@
-name: Docker CI
+name: Small Docker CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 2 * * 0' # Weekly on Sundays at 02:00
 
-jobs:
-  build:
+Small:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    #- name: Pull Image for cache
-    #  run: docker pull cyb3rjak3/latex-docker:small
+    - name: Pull Image for cache
+      run: docker pull cyb3rjak3/latex-docker:small
     - name: Build the Docker image
       run: |
         docker build . --file Small.Dockerfile --tag cyb3rjak3/latex-docker:small --cache-from cyb3rjak3/latex-docker:small
